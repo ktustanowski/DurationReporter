@@ -20,7 +20,6 @@ DurationReporter.end(event: "Video", action: "Buffering")
 DurationReporter.begin(event: "Video", action: "Buffering")
 DurationReporter.end(event: "Video", action: "Buffering")
 
-
 let report = DurationReporter.report()
 
 print(report)

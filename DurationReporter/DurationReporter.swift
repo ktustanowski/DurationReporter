@@ -38,9 +38,9 @@ public struct DurationReporter {
     public static var onReportEnd: ((String, DurationReport) -> ())?
     
     /// Begin time tracking. Supports multiple actions grouping. When added action that was already
-    /// tracked 1, 2, 3... will be added to action name to indicate this fact. Another action can be 
-    /// added only after the previous one is finished. Tracking `Buffering`, `Loading` at the same time 
-    /// is fine but to track another `buffering` the first one must complete first.
+    /// tracked 2, 3, 4... will be added to action name to indicate this fact. Another action can be
+    /// added only after the previous one is finished. Tracking `Buffering`, `Loading` at the same
+    /// time is fine but to track another `Buffering` the first one must complete first.
     ///
     /// - Parameters:
     ///   - event: action group name i.e Video_Identifier::Play
@@ -101,5 +101,17 @@ public struct DurationReporter {
             })
         }
         return output
+    }
+    
+    /// Provide collected data for further processing
+    ///
+    /// - Returns: collected data
+    public static func reportData() -> [String : [DurationReport]] {
+        return reports
+    }
+    
+    /// Clear all gathered data
+    static func clear() {
+        reports.removeAll()
     }
 }

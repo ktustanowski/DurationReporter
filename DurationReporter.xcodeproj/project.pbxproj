@@ -10,8 +10,8 @@
 		9A31BB3B1ED5C5D3004FE79C /* DurationReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A31BB3A1ED5C5D3004FE79C /* DurationReport.swift */; };
 		9A31BB3D1ED5C645004FE79C /* DurationReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A31BB3C1ED5C645004FE79C /* DurationReporter.swift */; };
 		9AEE32291ED5AF7C008ACCAA /* DurationReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE321F1ED5AF7C008ACCAA /* DurationReporter.framework */; };
-		9AEE322E1ED5AF7C008ACCAA /* DurationReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE322D1ED5AF7C008ACCAA /* DurationReporterTests.swift */; };
 		9AEE32301ED5AF7C008ACCAA /* DurationReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEE32221ED5AF7C008ACCAA /* DurationReporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9AF1774C1ED5F040006FE394 /* DurationReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF1774B1ED5F040006FE394 /* DurationReporterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,9 +31,9 @@
 		9AEE32221ED5AF7C008ACCAA /* DurationReporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DurationReporter.h; sourceTree = "<group>"; };
 		9AEE32231ED5AF7C008ACCAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9AEE32281ED5AF7C008ACCAA /* DurationReporterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DurationReporterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AEE322D1ED5AF7C008ACCAA /* DurationReporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationReporterTests.swift; sourceTree = "<group>"; };
 		9AEE322F1ED5AF7C008ACCAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9AEE32391ED5AF8D008ACCAA /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
+		9AF1774B1ED5F040006FE394 /* DurationReporterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DurationReporterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,8 +88,8 @@
 		9AEE322C1ED5AF7C008ACCAA /* DurationReporterTests */ = {
 			isa = PBXGroup;
 			children = (
-				9AEE322D1ED5AF7C008ACCAA /* DurationReporterTests.swift */,
 				9AEE322F1ED5AF7C008ACCAA /* Info.plist */,
+				9AF1774B1ED5F040006FE394 /* DurationReporterTests.swift */,
 			);
 			path = DurationReporterTests;
 			sourceTree = "<group>";
@@ -161,6 +161,7 @@
 					};
 					9AEE32271ED5AF7C008ACCAA = {
 						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -214,7 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AEE322E1ED5AF7C008ACCAA /* DurationReporterTests.swift in Sources */,
+				9AF1774C1ED5F040006FE394 /* DurationReporterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,10 +374,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = DurationReporterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ktustanowski.com.DurationReporterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -385,6 +388,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = DurationReporterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ktustanowski.com.DurationReporterTests;
