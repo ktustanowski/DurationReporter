@@ -6,9 +6,7 @@ Have you ever wanted to know how long:
 
 Measuring how long does it take for a function to *do stuff* is easy. But measuring duration of whole *flows* in the application is much more complex. Especially if it has to work across different classes. When you just want to measure this stuff once... well... it's fine. It can be messy because it won't make to production codebase. 
 
-But...
-
-What if you want to measure this times constantly? What if you also want to report them to some analytics tool? Or you just want print the report to have all the data in one place. Ready to be analyzed.
+But what if you want to measure this times constantly? What if you also want to report them to some analytics tool? Or you just want print the report to have all the data in one place. Ready to be analyzed.
 
 Then it gets really messy. All this dates, measurements, lots of additional code. Then you have to make a report out of it or just scan the console for printouts. *Been there, done that* ☹️ thats why I created *Duration Reporter*. It's only purpose is to make measuring duration of *flows* fast & easy 🚀.
 
