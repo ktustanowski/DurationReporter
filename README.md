@@ -78,3 +78,48 @@ Duplicated actions have 2, 3, 4... suffix:
 ⏱ play2 - 1001 ms
 ⏱ play3 - 1001 ms
 ```
+
+## Handling report begin & end
+Right after dispatching `begin` for action
+```
+public static var onReportBegin: ((String, DurationReport) -> ())?
+```
+closure is called. After dispatching `end` for action
+```
+public static var onReportEnd: ((String, DurationReport) -> ())?
+```
+is called.
+This basically mean that you can make custom actions while report is being created. Let's consider the example with application configuration again but let's set this two closures before
+```
+DurationReporter.onReportBegin = { name, report in print("\(name)::\(report.title) 🚀") }
+DurationReporter.onReportEnd = { name, report in print("\(name)::\(report.title) 🎉") }
+```
+and the result we get:
+```
+ApplicationStart::load config from API 🚀
+ApplicationStart::load config from API 🎉
+ApplicationStart::save configuration 🚀
+ApplicationStart::save configuration 🎉
+   ApplicationStart [2]
+⏱ load config from API - 1005 ms
+⏱ save configuration - 1001 ms
+```
+This is just simple example of how to add simple console logging. But why just print to console when we can do so much better i.e.:
+```
+DurationReporter.onReportEnd = { name, report in /* send report to analytic tool */ }
+DurationReporter.onReportEnd = { name, report in /* persist report in local / external storage */ }
+```
+
+
+## Lost actions
+If action is not completed it appear with 🔴 in report:
+```
+   ApplicationStart [2]
+⏱ load config from API - 0 ms
+🔴 save configuration - ? ms
+```
+## Clear
+You can purge current reporting data and start collecting new one:
+```
+DurationReporter.clear()
+```
