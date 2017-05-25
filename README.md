@@ -29,7 +29,7 @@ When you want to see the results you just print the report:
 print(DurationReporter.report())
 ```
 ```
-   ApplicationStart [2]
+   ApplicationStart [1]
 ⏱ setup - 5006 ms
 ```
 ## Grouped reporting
