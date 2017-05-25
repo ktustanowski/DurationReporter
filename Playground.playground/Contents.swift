@@ -23,3 +23,6 @@ DurationReporter.end(event: "Video", action: "Buffering")
 let report = DurationReporter.report()
 
 print(report)
+
+
+let collectedData = DurationReporter.reportData()
