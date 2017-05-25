@@ -14,7 +14,7 @@ class DurationReporterTests: XCTestCase {
     override func tearDown() {
         DurationReporter.clear()
         DurationReporter.onReportEnd = nil
-        DurationReporter.onReportStart = nil
+        DurationReporter.onReportBegin = nil
         
         super.tearDown()
     }
@@ -22,7 +22,7 @@ class DurationReporterTests: XCTestCase {
     func testThatInformsWhenEventBegins() {
         var receivedEventName: String? = nil
         var receivedReport: DurationReport? = nil
-        DurationReporter.onReportStart = { eventName, report in
+        DurationReporter.onReportBegin = { eventName, report in
             receivedEventName = eventName
             receivedReport = report
         }

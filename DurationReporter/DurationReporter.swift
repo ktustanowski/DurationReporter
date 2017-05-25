@@ -33,7 +33,7 @@ public struct DurationReporter {
     fileprivate static var reports: [String : [DurationReport]] = [:]
     
     /// Called right after report .begin()
-    public static var onReportStart: ((String, DurationReport) -> ())?
+    public static var onReportBegin: ((String, DurationReport) -> ())?
     /// Called right after report .end()
     public static var onReportEnd: ((String, DurationReport) -> ())?
     
@@ -63,7 +63,7 @@ public struct DurationReporter {
         
         let report = DurationReport(title: actionUniqueName)
         report.begin()
-        onReportStart?(event, report)
+        onReportBegin?(event, report)
         eventReports.append(report)
         
         reports[event] = eventReports
@@ -93,11 +93,13 @@ public struct DurationReporter {
     public static func report() -> String {
         var output = ""
         reports.forEach { event, reports in
-            output += "=======================================\n"
-            output += "\(event) [\(reports.count)]\n"
-            output += "=======================================\n"
+            output += "   \(event) [\(reports.count)]\n"
             reports.forEach({ report in
-                output += ":: \(report.title) duration: \(String(describing: report.duration))\n"
+                if let duration = report.duration {
+                    output += "⏱ \(report.title) - \(duration) ms\n"
+                } else {
+                    output += "🔴 \(report.title) - ? ms\n"
+                }
             })
         }
         return output
@@ -111,7 +113,7 @@ public struct DurationReporter {
     }
     
     /// Clear all gathered data
-    static func clear() {
+    public static func clear() {
         reports.removeAll()
     }
 }
