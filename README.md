@@ -113,7 +113,7 @@ DurationReporter.onReportEnd = { name, report in /* persist report in local / ex
 If action is not completed it appear with 🔴 in report:
 ```
    ApplicationStart [2]
-⏱ load config from API - 0 ms
+⏱ load config from API - 1000 ms
 🔴 save configuration - ? ms
 ```
 ## Clear
