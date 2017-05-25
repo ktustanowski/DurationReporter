@@ -2,7 +2,7 @@
 Have you ever wanted to know how long:
 * does it take for you app to finish initial configuration
 * user has to wait after tapping play to actually see the video
-* your view controller is `dong stuff` before user can see it
+* your view controller is `doing stuff` before user can see it
 
 Measuring how long does it take for a function to *do stuff* is easy. But measuring duration of whole *flows* in the application is much more complex. Especially if it has to work across different classes. When you just want to measure this stuff once... well... it's fine. It can be messy because it won't make to production codebase. 
 
