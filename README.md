@@ -32,6 +32,12 @@ print(DurationReporter.report())
    ApplicationStart [1]
 ⏱ setup - 5006 ms
 ```
+You can also retrieve raw collected data:
+```
+let collectedData = DurationReporter.reportData()
+```
+and use it to create custom report that suits your needs best.
+
 ## Grouped reporting
 Events gathers actions so instead of just knowing how long did whole application configuration take we can do this:
 ```
@@ -107,8 +113,6 @@ This is just simple example of how to add simple console logging. But why just p
 DurationReporter.onReportEnd = { name, report in /* send report to analytic tool */ }
 DurationReporter.onReportEnd = { name, report in /* persist report in local / external storage */ }
 ```
-
-
 ## Lost actions
 If action is not completed it appear with 🔴 in report:
 ```
