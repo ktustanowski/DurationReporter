@@ -32,7 +32,7 @@ public class DurationReport {
     
     fileprivate var beginTime: UInt64?
     fileprivate var endTime: UInt64?
-    fileprivate var info : mach_timebase_info = mach_timebase_info(numer: 0, denom: 0)
+    fileprivate var timebaseInfo : mach_timebase_info = mach_timebase_info(numer: 0, denom: 0)
     
     /// Action name which duration is measured in report
     public let title: String
@@ -46,9 +46,9 @@ public class DurationReport {
     public var duration: UInt64? {
         guard let endTime = endTime, let beginTime = beginTime else { return nil }
         let duration = endTime - beginTime
-        mach_timebase_info(&info)
+        mach_timebase_info(&timebaseInfo)
         
-        return (duration * UInt64(info.numer) / UInt64(info.denom)) / 1_000_000
+        return (duration * UInt64(timebaseInfo.numer) / UInt64(timebaseInfo.denom)) / 1_000_000
     }
     
     /// Mark that action did start
