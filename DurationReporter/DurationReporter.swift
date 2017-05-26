@@ -48,9 +48,9 @@ public struct DurationReporter {
     public static func begin(event: String, action: String) {
         var eventReports = reports[event] ?? []
         let actionReports = eventReports.filter({ $0.title.contains(action) })
-        let similarProcessIsTracked = actionReports.filter({ $0.duration == nil }).count > 0
+        let actionAlreadyTracked = actionReports.filter({ $0.duration == nil }).count > 0
         
-        guard !similarProcessIsTracked else {
+        guard !actionAlreadyTracked else {
             print("Can't add action - another \(action) is already tracked.")
             return }
         
@@ -80,7 +80,7 @@ public struct DurationReporter {
         report?.end()
         
         guard let properReport = report else {
-            print("Can't end process - \(action) didn't find.")
+            print("Can't end action - \(action) didn't find.")
             return
         }
         

@@ -42,7 +42,7 @@ public class DurationReport {
         return duration != nil
     }
         
-    /// Total duration of action
+    /// Total duration of action in milliseconds (ms)
     public var duration: UInt64? {
         guard let endTime = endTime, let beginTime = beginTime else { return nil }
         let duration = endTime - beginTime
