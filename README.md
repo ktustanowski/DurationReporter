@@ -121,7 +121,7 @@ But if you replace default reporting (check below) algorithm with slightly modif
 2. Watch2 1001ms 33.27% Sherlock S01E02
 3. Watch3 1001ms 33.27% Sherlock S01E03
 ```
-You can pass as a paylod literally anything.
+You can pass literally anything as a paylod.
 
 
 ## Reports
@@ -139,7 +139,7 @@ DurationReporter.reportGenerator = { collectedData in
     collectedData.forEach { eventName, reports in
         reports.enumerated().forEach { index, report in
             if let reportDuration = report.duration {
-                output += "\(eventName) → \(index). \(report.title) \(reportDuration)ms\n"
+                output += "\(eventName) → \(index). \(report.title) ⏱ \(reportDuration)ms\n"
             } else {
                 output += "\(eventName) → \(index). 😱 \(report.title) - ?\n"
             }
@@ -152,9 +152,9 @@ DurationReporter.reportGenerator = { collectedData in
 ```
 to get any kind of report you need with just calling `DurationReporter.generateReport()`:
 ```
-Application Start → 1. Loading ⏱1008ms 
-Application Start → 2. Loading Home ⏱2001ms 
-Application Start → 3. Preparing Home ⏱201ms 
+Application Start → 1. Loading ⏱ 1008ms 
+Application Start → 2. Loading Home ⏱ 2001ms 
+Application Start → 3. Preparing Home ⏱ 201ms 
 ```
 
 ## Handling report begin & end
@@ -184,10 +184,8 @@ ApplicationStart::Save configuration 🎉
 2. Save configuration 1001ms 33.29%
 ```
 This is just simple example of how to add simple console logging. But why just print to console when we can do so much better i.e.:
-```
-DurationReporter.onReportEnd = { name, report in /* send report to analytic tool */ }
-DurationReporter.onReportEnd = { name, report in /* persist report in local / external storage */ }
-```
+* Persist report data
+* Upload measured durations to external analytics
 ## Lost actions
 If action is not completed it appear with 🔴 in report:
 ```
