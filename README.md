@@ -47,9 +47,11 @@ where passing event and action name `just won't be enough`. For situations like 
 DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E01")
 [...]
 DurationReporter.end(event: "Video", action: "Watch")
+[...]
 DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E02")
 [...]
 DurationReporter.end(event: "Video", action: "Watch")
+[...]
 DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E03")
 [...]
 DurationReporter.end(event: "Video", action: "Watch")
