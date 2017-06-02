@@ -44,41 +44,6 @@ print(DurationReporter.generateReport())
 1. Loading 1005ms 100.00%
 ```
 
-## Reporting with custom payload
-There might be sutuations like:
-* making reporting calls to analytics after report is finished
-* making more detailed reports
-
-where passing event and action name `just isn't enough`. For situations like this you can pass your custom `payload` on `begin` & `end`. Then you just have to retrieve this payload from report using `beginPayload` and `endPayload`.
-```
-DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E01")
-[...]
-DurationReporter.end(event: "Video", action: "Watch")
-[...]
-DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E02")
-[...]
-DurationReporter.end(event: "Video", action: "Watch")
-[...]
-DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E03")
-[...]
-DurationReporter.end(event: "Video", action: "Watch")
-```
-In normal report you will see no difference
-```
-🚀 Video - 3009ms
-1. Watch 1007ms 33.47%
-2. Watch2 1001ms 33.27%
-3. Watch3 1001ms 33.27%
-```
-But if you replace default reporting (check below) algorithm with slightly modified version (just add `\((report.beginPayload as? String) ?? "")` when reporting actions) you will see this:
-```
-🚀 Video - 3009ms
-1. Watch 1007ms 33.47% Sherlock S01E01
-2. Watch2 1001ms 33.27% Sherlock S01E02
-3. Watch3 1001ms 33.27% Sherlock S01E03
-```
-You can pass as a paylod literally anything.
-
 ## Grouped reporting
 Events gathers actions so instead of just knowing how long did whole application configuration take we can do this:
 ```
@@ -123,6 +88,41 @@ Duplicated actions have 2, 3, 4... suffix:
 2. Play2 1001ms 33.28%
 3. Play3 1001ms 33.28%
 ```
+## Reporting with custom payload
+There might be sutuations like:
+* making reporting calls to analytics after report is finished
+* making more detailed reports
+
+where passing event and action name `just isn't enough`. For situations like this you can pass your custom `payload` on `begin` & `end`. Then you just have to retrieve this payload from report using `beginPayload` and `endPayload`.
+```
+DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E01")
+[...]
+DurationReporter.end(event: "Video", action: "Watch")
+[...]
+DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E02")
+[...]
+DurationReporter.end(event: "Video", action: "Watch")
+[...]
+DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E03")
+[...]
+DurationReporter.end(event: "Video", action: "Watch")
+```
+In normal report you will see no difference
+```
+🚀 Video - 3009ms
+1. Watch 1007ms 33.47%
+2. Watch2 1001ms 33.27%
+3. Watch3 1001ms 33.27%
+```
+But if you replace default reporting (check below) algorithm with slightly modified version (just add `\((report.beginPayload as? String) ?? "")` when reporting actions) you will see this:
+```
+🚀 Video - 3009ms
+1. Watch 1007ms 33.47% Sherlock S01E01
+2. Watch2 1001ms 33.27% Sherlock S01E02
+3. Watch3 1001ms 33.27% Sherlock S01E03
+```
+You can pass as a paylod literally anything.
+
 
 ## Reports
 You can create custom reports. Just get collected data:
