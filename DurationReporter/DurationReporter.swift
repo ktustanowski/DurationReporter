@@ -87,22 +87,35 @@ public struct DurationReporter {
         onReportEnd?(event, properReport)
     }
     
-    /// Generate report string from collected data
+    /// Report generating closure
     ///
     /// - Returns: report string
-    public static func report() -> String {
+    public static var reportGenerator: ([String : [DurationReport]]) -> (String) = {reports in
         var output = ""
-        reports.forEach { event, reports in
-            output += "   \(event) [\(reports.count)]\n"
-            reports.forEach({ report in
-                if let duration = report.duration {
-                    output += "⏱ \(report.title) - \(duration) ms\n"
+        
+        reports.forEach { eventName, eventReports in
+            let eventDuration = eventReports.flatMap { $0.duration }.reduce(0, { $0 + $1 })
+            output += ("\n⏱ \(eventName) - \(eventDuration)ms\n")
+            
+            eventReports.enumerated().forEach { index, report in
+                if let reportDuration = report.duration {
+                    let percentage = String(format: "%.2f", (Double(reportDuration) / Double(eventDuration)) * 100.0)
+                    output += "\(index + 1). \(report.title) \(reportDuration)ms \(percentage)%\n"
                 } else {
-                    output += "🔴 \(report.title) - ? ms\n"
+                    output += "\(index). 🔴 \(report.title) - ?\n"
                 }
-            })
+                
+            }
         }
+
         return output
+    }
+    
+    /// Generate report from collected data
+    ///
+    /// - Returns: report string
+    public static func generateReport() -> String {
+        return reportGenerator(reports)
     }
     
     /// Provide collected data for further processing

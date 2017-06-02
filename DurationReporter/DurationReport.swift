@@ -50,7 +50,7 @@ public class DurationReport {
         
         return (duration * UInt64(timebaseInfo.numer) / UInt64(timebaseInfo.denom)) / 1_000_000
     }
-    
+        
     /// Mark that action did start
     public func begin() {
         guard beginTime == nil else {
