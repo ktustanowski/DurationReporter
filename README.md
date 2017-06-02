@@ -2,11 +2,11 @@
 Have you ever wanted to know how long:
 * does it take for you app to finish initial configuration
 * user has to wait after tapping play to actually see the video
-* your view controller is `doing stuff` before user can see it
+* your view controller is doing stuff before user can see it
 
-Measuring how long does it take for a function to **do stuff** is easy. Measuring duration of whole **flows** in the application is much more complex. Especially if it has to work across different components and screens. 
+Measuring how long does it take for a function to *do stuff* is easy. Measuring duration of whole **flows** in the application is much more complex. Especially if it has to work across different components and screens. 
 
-Take a look at this console log. It this looks useful to you keep reading. I will show you how 🚀 & easy you can get similar reports.
+Take a look at this console log. If this looks useful to you keep reading. You will see how easy you can generate similar reports with **DurationReporter**.
 ```
 🚀 Application Start - 3207ms
 1. Loading 1006ms 31.37%
