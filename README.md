@@ -8,7 +8,7 @@ Measuring how long does it take for a function to *do stuff* is easy. But measur
 
 But what if you want to measure this times constantly? What if you also want to report them to some analytics tool? Or you just want print the report to have all the data in one place. Ready to be analyzed.
 
-Then it gets really messy. All this dates, measurements, lots of additional code. Then you have to make a report out of it or just scan the console for printouts. *Been there, done that* ☹️ thats why I created *Duration Reporter*. It's only purpose is to make measuring duration of *flows* fast & easy 🚀.
+Then it gets really messy. All this dates, measurements, lots of additional code. Then you have to make a report out of it or just scan the console for printouts. *Been there, done that* ☹️ thats why I created *Duration Reporter*. It's only purpose is to make measuring duration of *flows* 🚀 & easy.
 
 # How it works
 ## Simple reporting
@@ -26,11 +26,11 @@ DurationReporter.end(event: "ApplicationStart", action: "setup")
 
 When you want to see the results you just print the report:
 ```
-print(DurationReporter.report())
+print(DurationReporter.generateReport())
 ```
 ```
-   ApplicationStart [1]
-⏱ setup - 5006 ms
+🚀 ApplicationStart - 1005ms
+1. setup 1005ms 100.00%
 ```
 You can also retrieve raw collected data:
 ```
@@ -53,9 +53,9 @@ DurationReporter.end(event: "ApplicationStart", action: "save configuration")
 ```
 And the result:
 ```
-   ApplicationStart [3]
-⏱ load config from API - 2008 ms
-⏱ save configuration - 1000 ms
+🚀 ApplicationStart - 3041ms
+1. load config from API 2041ms 67.12%
+2. save configuration 1000ms 32.88%
 ```
 ## Grouped reporting with duplications
 Duplication is possible only when previous action of this kind is completed. Starting two identical actions at the same time is impossible. There is no way to determine which one should be completed when `DurationReporter.end` is called.
@@ -77,10 +77,10 @@ DurationReporter.end(event: "Video::SherlockS01E01", action: "play")
 ```
 Duplicated actions have 2, 3, 4... suffix:
 ```
-  Video::SherlockS01E01 [3]
-⏱ play - 1007 ms
-⏱ play2 - 1001 ms
-⏱ play3 - 1001 ms
+🚀 Video::SherlockS01E01 - 3008ms
+1. play 1006ms 33.44%
+2. play2 1001ms 33.28%
+3. play3 1001ms 33.28%
 ```
 
 ## Handling report begin & end
@@ -104,9 +104,10 @@ ApplicationStart::load config from API 🚀
 ApplicationStart::load config from API 🎉
 ApplicationStart::save configuration 🚀
 ApplicationStart::save configuration 🎉
-   ApplicationStart [2]
-⏱ load config from API - 1005 ms
-⏱ save configuration - 1001 ms
+
+🚀 ApplicationStart - 3007ms
+1. load config from API 2006ms 66.71%
+2. save configuration 1001ms 33.29%
 ```
 This is just simple example of how to add simple console logging. But why just print to console when we can do so much better i.e.:
 ```
@@ -116,9 +117,9 @@ DurationReporter.onReportEnd = { name, report in /* persist report in local / ex
 ## Lost actions
 If action is not completed it appear with 🔴 in report:
 ```
-   ApplicationStart [2]
-⏱ load config from API - 1000 ms
-🔴 save configuration - ? ms
+🚀 ApplicationStart - 2006ms
+1. load config from API 2006ms 100.00%
+2. 🔴 save configuration - ?
 ```
 ## Clear
 You can purge current reporting data and start collecting new one:
