@@ -45,7 +45,7 @@ public struct DurationReporter {
     /// - Parameters:
     ///   - event: action group name i.e Video_Identifier::Play
     ///   - action: concrete action name i.e. Buffering, ContentLoading etc.
-    public static func begin(event: String, action: String) {
+    public static func begin(event: String, action: String, payload: Any? = nil) {
         var eventReports = reports[event] ?? []
         let actionReports = eventReports.filter({ $0.title.contains(action) })
         let similarProcessIsTracked = actionReports.filter({ $0.duration == nil }).count > 0
@@ -62,6 +62,7 @@ public struct DurationReporter {
         }
         
         let report = DurationReport(title: actionUniqueName)
+        report.beginPayload = payload
         report.begin()
         onReportBegin?(event, report)
         eventReports.append(report)
@@ -74,9 +75,10 @@ public struct DurationReporter {
     /// - Parameters:
     ///   - event: action group name i.e Video_Identifier::Play
     ///   - action: concrete action name i.e. Buffering, ContentLoading etc.
-    public static func end(event: String, action: String) {
+    public static func end(event: String, action: String, payload: Any? = nil) {
         let eventReports = reports[event]
         let report = eventReports?.filter({ $0.title.contains(action) && !$0.isComplete }).last
+        report?.endPayload = payload
         report?.end()
         
         guard let properReport = report else {

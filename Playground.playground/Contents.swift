@@ -3,9 +3,9 @@
 import Foundation
 import DurationReporter
 
-DurationReporter.begin(event: "Application Start", action: "Loading")
+DurationReporter.begin(event: "Application Start", action: "Loading", payload: "🚀")
 sleep(1)
-DurationReporter.end(event: "Application Start", action: "Loading")
+DurationReporter.end(event: "Application Start", action: "Loading", payload: "💥")
 
 DurationReporter.begin(event: "Application Start", action: "Loading Home")
 sleep(2)
@@ -28,7 +28,7 @@ let collectedData = DurationReporter.reportData()
 collectedData.forEach { eventName, reports in
     reports.enumerated().forEach { index, report in
         if let reportDuration = report.duration {
-            print("\(eventName) → \(index). \(report.title) \(reportDuration)ms")
+            print("\(eventName) → \(index). \(report.title) \(reportDuration)ms \((report.beginPayload as? String) ?? "") \((report.endPayload as? String) ?? "")")
         } else {
             print("\(eventName) → \(index). 🔴 \(report.title) - ?\n")
         }

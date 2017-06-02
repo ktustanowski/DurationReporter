@@ -142,7 +142,19 @@ class DurationReporterTests: XCTestCase {
         
         XCTAssertEqual(DurationReporter.generateReport(), "test report")
     }
-    
+  
+    func testThatCanPassCustomPayloadOnBegin() {
+        DurationReporter.begin(event: "EventName", action: "TestAction", payload: "TestPayload")
+        
+        XCTAssertGreaterThanOrEqual(reportData["EventName"]!.first!.beginPayload as! String , "TestPayload")
+    }
+
+    func testThatCanPassCustomPayloadOnEnd() {
+        DurationReporter.begin(event: "EventName", action: "TestAction")
+        DurationReporter.end(event: "EventName", action: "TestAction", payload: "TestPayload")
+        
+        XCTAssertGreaterThanOrEqual(reportData["EventName"]!.first!.endPayload as! String , "TestPayload")
+    }
 }
 
 extension DurationReporterTests {

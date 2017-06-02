@@ -37,6 +37,12 @@ public class DurationReport {
     /// Action name which duration is measured in report
     public let title: String
     
+    /// Data passed on begin
+    public var beginPayload: Any?
+    
+    /// Data passed on end
+    public var endPayload: Any?
+    
     /// Is report complete (did begin and then end)
     public var isComplete: Bool {
         return duration != nil
