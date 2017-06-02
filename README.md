@@ -27,35 +27,29 @@ Take a look at this console log. If this looks useful to you keep reading. You w
 First you indicate action start:
 
 ```
-DurationReporter.begin(event: "ApplicationStart", action: "Setup")
+DurationReporter.begin(event: "ApplicationStart", action: "Loading")
 ```
 
 When it's done you indicate that action did end:
 
 ```
-DurationReporter.end(event: "ApplicationStart", action: "Setup")
+DurationReporter.end(event: "ApplicationStart", action: "Loading")
 ```
-
 When you want to see the results you just print the report:
 ```
 print(DurationReporter.generateReport())
 ```
 ```
 🚀 ApplicationStart - 1005ms
-1. Setup 1005ms 100.00%
+1. Loading 1005ms 100.00%
 ```
-You can also retrieve raw collected data:
-```
-let collectedData = DurationReporter.reportData()
-```
-and use it to create custom report that suits your needs best.
 
 ## Reporting with custom payload
 There might be sutuations like:
 * making reporting calls to analytics after report is finished
 * making more detailed reports
 
-where passing event and action name `just won't be enough`. For situations like this you can pass your custom `payload` on `begin` & `end`. Then you just have to retrieve this payload from report using `beginPayload` and `endPayload`.
+where passing event and action name `just isn't enough`. For situations like this you can pass your custom `payload` on `begin` & `end`. Then you just have to retrieve this payload from report using `beginPayload` and `endPayload`.
 ```
 DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E01")
 [...]
@@ -76,13 +70,15 @@ In normal report you will see no difference
 2. Watch2 1001ms 33.27%
 3. Watch3 1001ms 33.27%
 ```
-But if you replace default reporting algorithm with slightly modified version (just add `\((report.beginPayload as? String) ?? "")` when reporting actions) you will see this:
+But if you replace default reporting (check below) algorithm with slightly modified version (just add `\((report.beginPayload as? String) ?? "")` when reporting actions) you will see this:
 ```
 🚀 Video - 3009ms
 1. Watch 1007ms 33.47% Sherlock S01E01
 2. Watch2 1001ms 33.27% Sherlock S01E02
 3. Watch3 1001ms 33.27% Sherlock S01E03
 ```
+You can pass as a paylod literally anything.
+
 ## Grouped reporting
 Events gathers actions so instead of just knowing how long did whole application configuration take we can do this:
 ```
@@ -126,6 +122,39 @@ Duplicated actions have 2, 3, 4... suffix:
 1. Play 1006ms 33.44%
 2. Play2 1001ms 33.28%
 3. Play3 1001ms 33.28%
+```
+
+## Reports
+You can create custom reports. Just get collected data:
+```
+let collectedData = DurationReporter.reportData()
+```
+and use it to create custom report that suits your needs best.
+
+You can also replace default raport generator code:
+```
+DurationReporter.reportGenerator = { collectedData in
+    var output = ""
+    
+    collectedData.forEach { eventName, reports in
+        reports.enumerated().forEach { index, report in
+            if let reportDuration = report.duration {
+                output += "\(eventName) → \(index). \(report.title) \(reportDuration)ms\n"
+            } else {
+                output += "\(eventName) → \(index). 😱 \(report.title) - ?\n"
+            }
+            
+        }
+    }
+    
+    return output
+}
+```
+to get any kind of report you need with just calling `DurationReporter.generateReport()`:
+```
+Application Start → 1. Loading ⏱1008ms 
+Application Start → 2. Loading Home ⏱2001ms 
+Application Start → 3. Preparing Home ⏱201ms 
 ```
 
 ## Handling report begin & end
