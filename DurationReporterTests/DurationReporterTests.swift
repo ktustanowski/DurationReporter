@@ -137,6 +137,12 @@ class DurationReporterTests: XCTestCase {
         XCTAssertLessThan(reportData["EventName"]!.first!.duration!, 1010)
     }
 
+    func testThatCanProvideCustomreporGeneratingAlgorithm() {
+        DurationReporter.reportGenerator = { _ in return "test report" }
+        
+        XCTAssertEqual(DurationReporter.generateReport(), "test report")
+    }
+    
 }
 
 extension DurationReporterTests {
