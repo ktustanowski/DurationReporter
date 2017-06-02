@@ -4,13 +4,31 @@ Have you ever wanted to know how long:
 * user has to wait after tapping play to actually see the video
 * your view controller is `doing stuff` before user can see it
 
-Measuring how long does it take for a function to *do stuff* is easy. But measuring duration of whole *flows* in the application is much more complex. Especially if it has to work across different classes. When you just want to measure this stuff once... well... it's fine. It can be messy because it won't make to production codebase. 
+Measuring how long does it take for a function to **do stuff** is easy. Measuring duration of whole **flows** in the application is much more complex. Especially if it has to work across different components and screens. 
 
-But what if you want to measure this times constantly? What if you also want to report them to some analytics tool? Or you just want print the report to have all the data in one place. Ready to be analyzed.
+Take a look at this console log. It this looks useful to you keep reading. I will show you how 🚀 & easy you can get similar reports.
+```
+🚀 Application Start - 3207ms
+1. Loading 1006ms 31.37%
+2. Loading Home 2001ms 62.39%
+3. Preparing Home 200ms 6.24%
 
-Then it gets really messy. All this dates, measurements, lots of additional code. Then you have to make a report out of it or just scan the console for printouts. *Been there, done that* ☹️ thats why I created *Duration Reporter*. It's only purpose is to make measuring duration of *flows* 🚀 & easy.
+🚀 Video - 33003ms
+1. Loading 2001ms 6.06%
+2. Buffering 1001ms 3.03%
+3. Playing 30001ms 90.90%
+
+🚀 Share Video - 1302ms
+1. Loading providers 501ms 38.48% 
+2. Sending 801ms 61.52% 
+```
 
 # How it works
+1. Indicate that event started. 
+1. Indicate that event ended. 
+
+💥 and it's done
+
 ## Simple reporting
 First you indicate action start:
 
