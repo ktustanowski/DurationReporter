@@ -97,14 +97,14 @@ public struct DurationReporter {
         
         reports.forEach { eventName, eventReports in
             let eventDuration = eventReports.flatMap { $0.duration }.reduce(0, { $0 + $1 })
-            output += ("\n⏱ \(eventName) - \(eventDuration)ms\n")
+            output += ("\n🚀 \(eventName) - \(eventDuration)ms\n")
             
             eventReports.enumerated().forEach { index, report in
                 if let reportDuration = report.duration {
                     let percentage = String(format: "%.2f", (Double(reportDuration) / Double(eventDuration)) * 100.0)
                     output += "\(index + 1). \(report.title) \(reportDuration)ms \(percentage)%\n"
                 } else {
-                    output += "\(index). 🔴 \(report.title) - ?\n"
+                    output += "\(index + 1). 🔴 \(report.title) - ?\n"
                 }
                 
             }
