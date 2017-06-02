@@ -23,13 +23,7 @@ Take a look at this console log. If this looks useful to you keep reading. You w
 2. Sending 801ms 61.52% 
 ```
 
-# How it works
-1. Indicate that event started. 
-1. Indicate that event ended. 
-
-💥 and it's done
-
-## Simple reporting
+## How it works
 First you indicate action start:
 
 ```
