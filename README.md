@@ -23,6 +23,14 @@ Take a look at this console log. If this looks useful to you keep reading. You w
 2. Sending 801ms 61.52% 
 ```
 
+## Carthage
+```
+github "ktustanowski/DurationReporter" "0.1.0"
+```
+
+## Cocoapods
+Coming soon! 😎
+
 ## How it works
 First you indicate action start:
 
