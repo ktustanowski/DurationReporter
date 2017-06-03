@@ -139,7 +139,7 @@ let collectedData = DurationReporter.reportData()
 ```
 and use it to create custom report that suits your needs best.
 
-You can also replace default raport generator code:
+You can also replace default report generator code:
 ```
 DurationReporter.reportGenerator = { collectedData in
     var output = ""
