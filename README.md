@@ -2,85 +2,167 @@
 Have you ever wanted to know how long:
 * does it take for you app to finish initial configuration
 * user has to wait after tapping play to actually see the video
-* your view controller is `doing stuff` before user can see it
+* your view controller is doing stuff before user can see it
 
-Measuring how long does it take for a function to *do stuff* is easy. But measuring duration of whole *flows* in the application is much more complex. Especially if it has to work across different classes. When you just want to measure this stuff once... well... it's fine. It can be messy because it won't make to production codebase. 
+Measuring how long does it take for a function to *do stuff* is easy. Measuring duration of whole **flows** in the application is much more complex. Especially if it has to work across different components and screens. 
 
-But what if you want to measure this times constantly? What if you also want to report them to some analytics tool? Or you just want print the report to have all the data in one place. Ready to be analyzed.
+Take a look at this console log. If this looks useful to you keep reading. You will see how easy you can generate similar reports with **DurationReporter**.
+```
+🚀 Application Start - 3207ms
+1. Loading 1006ms 31.37%
+2. Loading Home 2001ms 62.39%
+3. Preparing Home 200ms 6.24%
 
-Then it gets really messy. All this dates, measurements, lots of additional code. Then you have to make a report out of it or just scan the console for printouts. *Been there, done that* ☹️ thats why I created *Duration Reporter*. It's only purpose is to make measuring duration of *flows* 🚀 & easy.
+🚀 Video - 33003ms
+1. Loading 2001ms 6.06%
+2. Buffering 1001ms 3.03%
+3. Playing 30001ms 90.90%
 
-# How it works
-## Simple reporting
+🚀 Share Video - 1302ms
+1. Loading providers 501ms 38.48% 
+2. Sending 801ms 61.52% 
+```
+
+## Carthage
+```
+github "ktustanowski/DurationReporter" "0.1.0"
+```
+
+## Cocoapods
+Coming soon! 😎
+
+## How it works
 First you indicate action start:
 
 ```
-DurationReporter.begin(event: "ApplicationStart", action: "setup")
+DurationReporter.begin(event: "ApplicationStart", action: "Loading")
 ```
 
 When it's done you indicate that action did end:
 
 ```
-DurationReporter.end(event: "ApplicationStart", action: "setup")
+DurationReporter.end(event: "ApplicationStart", action: "Loading")
 ```
-
 When you want to see the results you just print the report:
 ```
 print(DurationReporter.generateReport())
 ```
 ```
 🚀 ApplicationStart - 1005ms
-1. setup 1005ms 100.00%
+1. Loading 1005ms 100.00%
 ```
-You can also retrieve raw collected data:
-```
-let collectedData = DurationReporter.reportData()
-```
-and use it to create custom report that suits your needs best.
 
 ## Grouped reporting
 Events gathers actions so instead of just knowing how long did whole application configuration take we can do this:
 ```
 [...]
-DurationReporter.begin(event: "ApplicationStart", action: "load config from API")
+DurationReporter.begin(event: "ApplicationStart", action: "Load config from API")
 [...]
-DurationReporter.end(event: "ApplicationStart", action: "load config from API")
+DurationReporter.end(event: "ApplicationStart", action: "Load config from API")
 [...]
-DurationReporter.begin(event: "ApplicationStart", action: "save configuration")
+DurationReporter.begin(event: "ApplicationStart", action: "Save configuration")
 [...]
-DurationReporter.end(event: "ApplicationStart", action: "save configuration")
+DurationReporter.end(event: "ApplicationStart", action: "Save configuration")
 [...]
 ```
 And the result:
 ```
 🚀 ApplicationStart - 3041ms
-1. load config from API 2041ms 67.12%
-2. save configuration 1000ms 32.88%
+1. Load config from API 2041ms 67.12%
+2. Save configuration 1000ms 32.88%
 ```
 ## Grouped reporting with duplications
 Duplication is possible only when previous action of this kind is completed. Starting two identical actions at the same time is impossible. There is no way to determine which one should be completed when `DurationReporter.end` is called.
 When one action ends another identical can be reported:
 
 ```
-DurationReporter.begin(event: "Video::SherlockS01E01", action: "play")
+DurationReporter.begin(event: "Video", action: "Play")
 [...]
-DurationReporter.end(event: "Video::SherlockS01E01", action: "play")
+DurationReporter.end(event: "Video", action: "Play")
 [...]
-DurationReporter.begin(event: "Video::SherlockS01E01", action: "play")
+DurationReporter.begin(event: "Video", action: "Play")
 [...]
-DurationReporter.end(event: "Video::SherlockS01E01", action: "play")
+DurationReporter.end(event: "Video", action: "Play")
 [...]
-DurationReporter.begin(event: "Video::SherlockS01E01", action: "play")
+DurationReporter.begin(event: "Video", action: "Play")
 [...]
-DurationReporter.end(event: "Video::SherlockS01E01", action: "play")
+DurationReporter.end(event: "Video", action: "Play")
 
 ```
 Duplicated actions have 2, 3, 4... suffix:
 ```
 🚀 Video::SherlockS01E01 - 3008ms
-1. play 1006ms 33.44%
-2. play2 1001ms 33.28%
-3. play3 1001ms 33.28%
+1. Play 1006ms 33.44%
+2. Play2 1001ms 33.28%
+3. Play3 1001ms 33.28%
+```
+## Reporting with custom payload
+There might be sutuations like:
+* making reporting calls to analytics after report is finished
+* making more detailed reports
+
+where passing event and action name `just isn't enough`. For situations like this you can pass your custom `payload` on `begin` & `end`. Then you just have to retrieve this payload from report using `beginPayload` and `endPayload`.
+```
+DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E01")
+[...]
+DurationReporter.end(event: "Video", action: "Watch")
+[...]
+DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E02")
+[...]
+DurationReporter.end(event: "Video", action: "Watch")
+[...]
+DurationReporter.begin(event: "Video", action: "Watch", payload: "Sherlock S01E03")
+[...]
+DurationReporter.end(event: "Video", action: "Watch")
+```
+In normal report you will see no difference
+```
+🚀 Video - 3009ms
+1. Watch 1007ms 33.47%
+2. Watch2 1001ms 33.27%
+3. Watch3 1001ms 33.27%
+```
+But if you replace default reporting (check below) algorithm with slightly modified version (just add `\((report.beginPayload as? String) ?? "")` when reporting actions) you will see this:
+```
+🚀 Video - 3009ms
+1. Watch 1007ms 33.47% Sherlock S01E01
+2. Watch2 1001ms 33.27% Sherlock S01E02
+3. Watch3 1001ms 33.27% Sherlock S01E03
+```
+You can pass literally anything as a paylod.
+
+
+## Reports
+You can create custom reports. Just get collected data:
+```
+let collectedData = DurationReporter.reportData()
+```
+and use it to create custom report that suits your needs best.
+
+You can also replace default report generator code:
+```
+DurationReporter.reportGenerator = { collectedData in
+    var output = ""
+    
+    collectedData.forEach { eventName, reports in
+        reports.enumerated().forEach { index, report in
+            if let reportDuration = report.duration {
+                output += "\(eventName) → \(index). \(report.title) ⏱ \(reportDuration)ms\n"
+            } else {
+                output += "\(eventName) → \(index). 😱 \(report.title) - ?\n"
+            }
+            
+        }
+    }
+    
+    return output
+}
+```
+to get any kind of report you need with just calling `DurationReporter.generateReport()`:
+```
+Application Start → 1. Loading ⏱ 1008ms 
+Application Start → 2. Loading Home ⏱ 2001ms 
+Application Start → 3. Preparing Home ⏱ 201ms 
 ```
 
 ## Handling report begin & end
@@ -100,29 +182,29 @@ DurationReporter.onReportEnd = { name, report in print("\(name)::\(report.title)
 ```
 and the result we get:
 ```
-ApplicationStart::load config from API 🚀
-ApplicationStart::load config from API 🎉
-ApplicationStart::save configuration 🚀
-ApplicationStart::save configuration 🎉
+ApplicationStart::Load config from API 🚀
+ApplicationStart::Load config from API 🎉
+ApplicationStart::Save configuration 🚀
+ApplicationStart::Save configuration 🎉
 
 🚀 ApplicationStart - 3007ms
-1. load config from API 2006ms 66.71%
-2. save configuration 1001ms 33.29%
+1. Load config from API 2006ms 66.71%
+2. Save configuration 1001ms 33.29%
 ```
 This is just simple example of how to add simple console logging. But why just print to console when we can do so much better i.e.:
-```
-DurationReporter.onReportEnd = { name, report in /* send report to analytic tool */ }
-DurationReporter.onReportEnd = { name, report in /* persist report in local / external storage */ }
-```
+* Persist report data
+* Upload measured durations to external analytics
 ## Lost actions
 If action is not completed it appear with 🔴 in report:
 ```
 🚀 ApplicationStart - 2006ms
-1. load config from API 2006ms 100.00%
-2. 🔴 save configuration - ?
+1. Load config from API 2006ms 100.00%
+2. 🔴 Save configuration - ?
 ```
 ## Clear
 You can purge current reporting data and start collecting new one:
 ```
 DurationReporter.clear()
 ```
+## Playground
+If you want to try it out just clone the repository open playground and see whether this works for you.
