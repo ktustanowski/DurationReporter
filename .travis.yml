@@ -1,4 +1,10 @@
 language: objective-c
 osx_image: xcode8.3
 script:
-- xctool -project DurationReporter.xcodeproj -scheme DurationReporter run-tests -test-sdk iphonesimulator10.3
+- xcodebuild \
+-project DurationReporter.xcodeproj \
+-scheme DurationReporter \
+-sdk iphonesimulator \
+-destination 'platform=iOS Simulator,name=iPhone 6,OS=10.3' \
+test
+
