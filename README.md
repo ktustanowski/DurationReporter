@@ -206,3 +206,5 @@ You can purge current reporting data and start collecting new one:
 ```
 DurationReporter.clear()
 ```
+## Playground
+If you want to try it out just clone the repository open playground and see whether this works for you.
