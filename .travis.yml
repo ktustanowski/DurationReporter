@@ -1,4 +1,4 @@
 language: objective-c
 osx_image: xcode8.3
 script:
-- xctool test -project DurationReporter.xcodeproj -scheme DurationReporterTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES
+- xctool -project DurationReporter.xcodeproj -scheme DurationReporterTests run-tests
