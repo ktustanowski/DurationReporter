@@ -1,4 +1,6 @@
 # DurationReporter
+[![Build Status](https://travis-ci.org/ktustanowski/DurationReporter.svg?branch=master)](https://travis-ci.org/ktustanowski/DurationReporter)
+
 Have you ever wanted to know how long:
 * does it take for you app to finish initial configuration
 * user has to wait after tapping play to actually see the video
