@@ -3,7 +3,7 @@
 ![Carthage compatibile](https://camo.githubusercontent.com/3dc8a44a2c3f7ccd5418008d1295aae48466c141/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f43617274686167652d636f6d70617469626c652d3442433531442e7376673f7374796c653d666c6174)
 
 Have you ever wanted to know how long:
-* does it take for you app to finish initial configuration
+* does it take for your app to finish initial configuration
 * user has to wait after tapping play to actually see the video
 * your view controller is doing stuff before user can see it
 
