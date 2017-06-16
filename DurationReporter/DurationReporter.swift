@@ -97,15 +97,17 @@ public struct DurationReporter {
         var output = ""
         
         reports.forEach { eventName, eventReports in
-            let eventDurationInNs = eventReports.flatMap { $0.duration }.reduce(0, +)
-            let eventDuration = eventDurationInNs / DurationReporter.timeUnit.divider
-            output += ("\n🚀 \(eventName) - \(eventDuration)\(DurationReporter.timeUnit.symbol)\n")
+            let eventDuration = eventReports.flatMap { $0.duration }.reduce(TimeInterval(0), +)
+            let eventDurationToRound = Double(eventDuration * DurationReporter.timeUnit.perSecond)
+            let eventDurationRounded = String(format: "%.f", eventDurationToRound)
+            output += ("\n🚀 \(eventName) - \(eventDurationRounded)\(DurationReporter.timeUnit.symbol)\n")
             
             eventReports.enumerated().forEach { index, report in
-                if let durationInNs = report.duration {
-                    let duration = durationInNs / DurationReporter.timeUnit.divider
-                    let percentage = String(format: "%.2f", (Double(durationInNs) / Double(eventDurationInNs)) * 100.0)
-                    output += "\(index + 1). \(report.title) \(duration)\(DurationReporter.timeUnit.symbol) \(percentage)%\n"
+                if let duration = report.duration {
+                    let durationToRound = duration * DurationReporter.timeUnit.perSecond
+                    let percentageRounded = String(format: "%.f", (duration / eventDuration) * 100.0)
+                    let durationRounded = String(format: "%.f", durationToRound)
+                    output += "\(index + 1). \(report.title) \(durationRounded)\(DurationReporter.timeUnit.symbol) \(percentageRounded)%\n"
                 } else {
                     output += "\(index + 1). 🔴 \(report.title) - ?\n"
                 }

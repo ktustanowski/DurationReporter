@@ -30,9 +30,8 @@ import Foundation
 
 public class DurationReport {
     
-    fileprivate var beginTime: UInt64?
-    fileprivate var endTime: UInt64?
-    fileprivate var timebaseInfo : mach_timebase_info = mach_timebase_info(numer: 0, denom: 0)
+    fileprivate var beginTime: TimeInterval?
+    fileprivate var endTime: TimeInterval?
     
     /// Action name which duration is measured in report
     public let title: String
@@ -48,18 +47,12 @@ public class DurationReport {
         return duration != nil
     }
         
-    /// Total duration of action in nanoseconds (ns)
-    public var duration: UInt64? {
+    /// Total duration of action in seconds (s)
+    public var duration: TimeInterval? {
         guard let endTime = endTime, let beginTime = beginTime else { return nil }
         let duration = endTime - beginTime
-        mach_timebase_info(&timebaseInfo)
         
-        // Using `withOverflow` to avoid crashes as swift integer types don’t allow integer overflows
-        //https://briancoyner.github.io/2015/11/19/swift-integer-overflow.html
-        let durationSafelyMultiplied = UInt64.multiplyWithOverflow(duration, UInt64(timebaseInfo.numer)).0
-        let durationSafelyDividied = UInt64.divideWithOverflow(durationSafelyMultiplied, UInt64(timebaseInfo.denom)).0
-        
-        return durationSafelyDividied
+        return duration
     }
         
     /// Mark that action did start
@@ -69,8 +62,7 @@ public class DurationReport {
             return
         }
         
-        beginTime = mach_absolute_time()
-        getpid()
+        beginTime = CACurrentMediaTime()
     }
     
     /// Mark that action did end
@@ -80,7 +72,7 @@ public class DurationReport {
             return
         }
 
-        endTime = mach_absolute_time()
+        endTime = CACurrentMediaTime()
     }
     
     /// Initializer
