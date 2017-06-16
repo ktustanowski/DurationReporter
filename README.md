@@ -31,9 +31,6 @@ Take a look at this console log. If this looks useful to you keep reading. You w
 github "ktustanowski/DurationReporter" "0.1.0"
 ```
 
-## Cocoapods
-Coming soon! 😎
-
 ## How it works
 First you indicate action start:
 
@@ -55,6 +52,16 @@ print(DurationReporter.generateReport())
 1. Loading 1005ms 100.00%
 ```
 
+## Units
+Measurement is done using `mach_absolute_time()` because its provides more accurate data than regular Date objects. Milliseconds are used as default unit when creating the report but you can easily change this:
+```
+DurationReporter.timeUnit = Nanosecond()
+```
+```
+🚀 Application Start - 1006253263ns
+1. Loading 1006253263ns 100.00%
+```
+Please note that when working on raw report data **nanoseconds** are the default unit used.
 ## Grouped reporting
 Events gathers actions so instead of just knowing how long did whole application configuration take we can do this:
 ```
