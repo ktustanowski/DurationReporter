@@ -12,6 +12,7 @@
 		9AEE32291ED5AF7C008ACCAA /* DurationReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE321F1ED5AF7C008ACCAA /* DurationReporter.framework */; };
 		9AEE32301ED5AF7C008ACCAA /* DurationReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEE32221ED5AF7C008ACCAA /* DurationReporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9AF1774C1ED5F040006FE394 /* DurationReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF1774B1ED5F040006FE394 /* DurationReporterTests.swift */; };
+		9AF7C00E1EF3DE1F00034AB0 /* DurationUnits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF7C00D1EF3DE1F00034AB0 /* DurationUnits.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		9AEE322F1ED5AF7C008ACCAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9AEE32391ED5AF8D008ACCAA /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 		9AF1774B1ED5F040006FE394 /* DurationReporterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DurationReporterTests.swift; sourceTree = "<group>"; };
+		9AF7C00D1EF3DE1F00034AB0 /* DurationUnits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DurationUnits.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				9AEE32231ED5AF7C008ACCAA /* Info.plist */,
 				9A31BB3A1ED5C5D3004FE79C /* DurationReport.swift */,
 				9A31BB3C1ED5C645004FE79C /* DurationReporter.swift */,
+				9AF7C00D1EF3DE1F00034AB0 /* DurationUnits.swift */,
 			);
 			path = DurationReporter;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			files = (
 				9A31BB3D1ED5C645004FE79C /* DurationReporter.swift in Sources */,
 				9A31BB3B1ED5C5D3004FE79C /* DurationReport.swift in Sources */,
+				9AF7C00E1EF3DE1F00034AB0 /* DurationUnits.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

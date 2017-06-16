@@ -37,6 +37,8 @@ public struct DurationReporter {
     /// Called right after report .end()
     public static var onReportEnd: ((String, DurationReport) -> ())?
     
+    public static var timeUnit: DurationUnit = Millisecond()
+    
     /// Begin time tracking. Supports multiple actions grouping. When added action that was already
     /// tracked 2, 3, 4... will be added to action name to indicate this fact. Another action can be
     /// added only after the previous one is finished. Tracking `Buffering`, `Loading` at the same
@@ -90,19 +92,20 @@ public struct DurationReporter {
     }
     
     /// Report generating closure
-    ///
     /// - Returns: report string
     public static var reportGenerator: ([String : [DurationReport]]) -> (String) = {reports in
         var output = ""
         
         reports.forEach { eventName, eventReports in
-            let eventDuration = eventReports.flatMap { $0.duration }.reduce(0, { $0 + $1 })
-            output += ("\n🚀 \(eventName) - \(eventDuration)ms\n")
+            let eventDurationInNs = eventReports.flatMap { $0.duration }.reduce(0, +)
+            let eventDuration = eventDurationInNs / DurationReporter.timeUnit.divider
+            output += ("\n🚀 \(eventName) - \(eventDuration)\(DurationReporter.timeUnit.symbol)\n")
             
             eventReports.enumerated().forEach { index, report in
-                if let reportDuration = report.duration {
-                    let percentage = String(format: "%.2f", (Double(reportDuration) / Double(eventDuration)) * 100.0)
-                    output += "\(index + 1). \(report.title) \(reportDuration)ms \(percentage)%\n"
+                if let durationInNs = report.duration {
+                    let duration = durationInNs / DurationReporter.timeUnit.divider
+                    let percentage = String(format: "%.2f", (Double(durationInNs) / Double(eventDurationInNs)) * 100.0)
+                    output += "\(index + 1). \(report.title) \(duration)\(DurationReporter.timeUnit.symbol) \(percentage)%\n"
                 } else {
                     output += "\(index + 1). 🔴 \(report.title) - ?\n"
                 }
