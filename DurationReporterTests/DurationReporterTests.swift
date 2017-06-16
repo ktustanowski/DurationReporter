@@ -133,8 +133,8 @@ class DurationReporterTests: XCTestCase {
         
         DurationReporter.end(event: "EventName", action: "TestAction")
         
-        XCTAssertGreaterThanOrEqual(reportData["EventName"]!.first!.duration!, 1000)
-        XCTAssertLessThan(reportData["EventName"]!.first!.duration!, 1010)
+        XCTAssertGreaterThanOrEqual(reportData["EventName"]!.first!.duration!, 1000000000)
+        XCTAssertLessThan(reportData["EventName"]!.first!.duration!, 1200000000)
     }
 
     func testThatCanProvideCustomreporGeneratingAlgorithm() {
