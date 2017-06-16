@@ -28,7 +28,7 @@ let collectedData = DurationReporter.reportData()
 collectedData.forEach { eventName, reports in
     reports.enumerated().forEach { index, report in
         if let reportDuration = report.duration {
-            print("\(eventName) → \(index). \(report.title) \(reportDuration)ms \((report.beginPayload as? String) ?? "") \((report.endPayload as? String) ?? "")")
+            print("\(eventName) → \(index). \(report.title) \(reportDuration)ns \((report.beginPayload as? String) ?? "") \((report.endPayload as? String) ?? "")")
         } else {
             print("\(eventName) → \(index). 🔴 \(report.title) - ?\n")
         }
@@ -43,7 +43,7 @@ DurationReporter.reportGenerator = { collectedData in
     collectedData.forEach { eventName, reports in
         reports.enumerated().forEach { index, report in
             if let reportDuration = report.duration {
-                output += "\(eventName) → \(index). \(report.title) \(reportDuration)ms\n"
+                output += "\(eventName) → \(index). \(report.title) \(reportDuration)ns\n"
             } else {
                 output += "\(eventName) → \(index). 🔴 \(report.title) - ?\n"
             }
