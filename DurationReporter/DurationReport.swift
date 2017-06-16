@@ -48,13 +48,18 @@ public class DurationReport {
         return duration != nil
     }
         
-    /// Total duration of action in milliseconds (ms)
+    /// Total duration of action in nanoseconds (ns)
     public var duration: UInt64? {
         guard let endTime = endTime, let beginTime = beginTime else { return nil }
         let duration = endTime - beginTime
         mach_timebase_info(&timebaseInfo)
         
-        return (duration * UInt64(timebaseInfo.numer) / UInt64(timebaseInfo.denom)) / 1_000_000
+        // Using `withOverflow` to avoid crashes as swift integer types don’t allow integer overflows
+        //https://briancoyner.github.io/2015/11/19/swift-integer-overflow.html
+        let durationSafelyMultiplied = UInt64.multiplyWithOverflow(duration, UInt64(timebaseInfo.numer)).0
+        let durationSafelyDividied = UInt64.divideWithOverflow(durationSafelyMultiplied, UInt64(timebaseInfo.denom)).0
+        
+        return durationSafelyDividied
     }
         
     /// Mark that action did start
@@ -65,6 +70,7 @@ public class DurationReport {
         }
         
         beginTime = mach_absolute_time()
+        getpid()
     }
     
     /// Mark that action did end
