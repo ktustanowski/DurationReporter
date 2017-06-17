@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
   - user has to wait after tapping play to actually see the video
   - your view controller is doing stuff before user can see it
 
-  Now you can measure it with minimal impact on the code. Generate readable from gathered data.
+  Now you can measure it with minimal impact on the code. Generate readable report from gathered data.
   Report measured data to external analytics tools.
                    DESC
 
