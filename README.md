@@ -17,13 +17,13 @@ Take a look at this console log. If this looks useful to you keep reading. You w
 3. Preparing Home 200ms 6.24%
 
 🚀 Video - 33003ms
-1. Loading 2001ms 6.06%
-2. Buffering 1001ms 3.03%
-3. Playing 30001ms 90.90%
+1. Loading   2001ms  6.06%
+2. Buffering 1001ms  3.03%
+3. Playing   30001ms 90.90%
 
 🚀 Share Video - 1302ms
 1. Loading providers 501ms 38.48% 
-2. Sending 801ms 61.52% 
+2. Sending           801ms 61.52% 
 ```
 
 ## Carthage
@@ -79,7 +79,7 @@ And the result:
 ```
 🚀 ApplicationStart - 3041ms
 1. Load config from API 2041ms 67.12%
-2. Save configuration 1000ms 32.88%
+2. Save configuration   1000ms 32.88%
 ```
 ## Grouped reporting with duplications
 Duplication is possible only when previous action of this kind is completed. Starting two identical actions at the same time is impossible. There is no way to determine which one should be completed when `DurationReporter.end` is called.
@@ -102,7 +102,7 @@ DurationReporter.end(event: "Video", action: "Play")
 Duplicated actions have 2, 3, 4... suffix:
 ```
 🚀 Video::SherlockS01E01 - 3008ms
-1. Play 1006ms 33.44%
+1. Play  1006ms 33.44%
 2. Play2 1001ms 33.28%
 3. Play3 1001ms 33.28%
 ```
@@ -128,14 +128,14 @@ DurationReporter.end(event: "Video", action: "Watch")
 In normal report you will see no difference
 ```
 🚀 Video - 3009ms
-1. Watch 1007ms 33.47%
+1. Watch  1007ms 33.47%
 2. Watch2 1001ms 33.27%
 3. Watch3 1001ms 33.27%
 ```
 But if you replace default reporting (check below) algorithm with slightly modified version (just add `\((report.beginPayload as? String) ?? "")` when reporting actions) you will see this:
 ```
 🚀 Video - 3009ms
-1. Watch 1007ms 33.47% Sherlock S01E01
+1. Watch  1007ms 33.47% Sherlock S01E01
 2. Watch2 1001ms 33.27% Sherlock S01E02
 3. Watch3 1001ms 33.27% Sherlock S01E03
 ```
@@ -199,7 +199,7 @@ ApplicationStart::Save configuration 🎉
 
 🚀 ApplicationStart - 3007ms
 1. Load config from API 2006ms 66.71%
-2. Save configuration 1001ms 33.29%
+2. Save configuration  1001ms 33.29%
 ```
 This is just simple example of how to add simple console logging. But why just print to console when we can do so much better i.e.:
 * Persist report data
