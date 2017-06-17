@@ -12,9 +12,9 @@ Measuring how long does it take for a function to *do stuff* is easy. Measuring 
 Take a look at this console log. If this looks useful to you keep reading. You will see how easy you can generate similar reports with **DurationReporter**.
 ```
 🚀 Application Start - 3207ms
-1. Loading 1006ms 31.37%
-2. Loading Home 2001ms 62.39%
-3. Preparing Home 200ms 6.24%
+1. Loading        1006ms 31.37%
+2. Loading Home   2001ms 62.39%
+3. Preparing Home 200ms  6.24%
 
 🚀 Video - 33003ms
 1. Loading   2001ms  6.06%
