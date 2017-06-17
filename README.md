@@ -61,7 +61,7 @@ DurationReporter.timeUnit = Nanosecond()
 🚀 Application Start - 1006253263ns
 1. Loading 1006253263ns 100.00%
 ```
-Please note that when working on raw report data **nanoseconds** are the default unit used.
+Please note that when working on raw report data **seconds** are the default unit used.
 ## Grouped reporting
 Events gathers actions so instead of just knowing how long did whole application configuration take we can do this:
 ```
