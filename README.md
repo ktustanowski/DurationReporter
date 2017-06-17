@@ -28,6 +28,10 @@ Take a look at this console log. If this looks useful to you keep reading. You w
 
 ## Cocoapods
 ```
+pod 'DurationReporter'
+```
+or the one below if ^ is not working yet. It's currently being processed.
+```
 pod 'DurationReporter', :git => 'https://github.com/ktustanowski/DurationReporter.git'
 ```
 
