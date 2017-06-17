@@ -26,6 +26,11 @@ Take a look at this console log. If this looks useful to you keep reading. You w
 2. Sending           801ms 61.52% 
 ```
 
+## Cocoapods
+```
+pod 'DurationReporter', :git => 'https://github.com/ktustanowski/DurationReporter.git'
+```
+
 ## Carthage
 ```
 github "ktustanowski/DurationReporter"
