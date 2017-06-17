@@ -53,7 +53,7 @@ print(DurationReporter.generateReport())
 ```
 
 ## Units
-Measurement is done using `mach_absolute_time()` because its provides more accurate data than regular Date objects. Milliseconds are used as default unit when creating the report but you can easily change this:
+Measurement is done using `mach_absolute_time()` because it provides more accurate data than regular Date objects. Milliseconds are used as default unit when creating the report but you can easily change this:
 ```
 DurationReporter.timeUnit = Nanosecond()
 ```
