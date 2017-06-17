@@ -22,28 +22,14 @@ DurationReporter.begin(event: "Problematic Code", action: "Executing 💥")
 print(":: Default report")
 print(DurationReporter.generateReport())
 
-print(":: Custom report #1")
-// Print regular / default report
-let collectedData = DurationReporter.reportData()
-collectedData.forEach { eventName, reports in
-    reports.enumerated().forEach { index, report in
-        if let reportDuration = report.duration {
-            print("\(eventName) → \(index). \(report.title) \(reportDuration)ns \((report.beginPayload as? String) ?? "") \((report.endPayload as? String) ?? "")")
-        } else {
-            print("\(eventName) → \(index). 🔴 \(report.title) - ?\n")
-        }
-        
-    }
-}
-
-print("\n:: Custom report #2")
+print("\n:: Custom report")
 // Print regular / default report
 DurationReporter.reportGenerator = { collectedData in
     var output = ""
     collectedData.forEach { eventName, reports in
         reports.enumerated().forEach { index, report in
             if let reportDuration = report.duration {
-                output += "\(eventName) → \(index). \(report.title) \(reportDuration)ns\n"
+                output += "\(eventName) → \(index). \(report.title) \(reportDuration)s\n"
             } else {
                 output += "\(eventName) → \(index). 🔴 \(report.title) - ?\n"
             }
@@ -53,3 +39,17 @@ DurationReporter.reportGenerator = { collectedData in
 }
 
 print(DurationReporter.generateReport())
+
+print(":: Report from raw collected data")
+// Print regular / default report
+let collectedData = DurationReporter.reportData()
+collectedData.forEach { eventName, reports in
+    reports.enumerated().forEach { index, report in
+        if let reportDuration = report.duration {
+            print("\(eventName) → \(index). \(report.title) \(reportDuration)s \((report.beginPayload as? String) ?? "") \((report.endPayload as? String) ?? "")")
+        } else {
+            print("\(eventName) → \(index). 🔴 \(report.title) - ?\n")
+        }
+        
+    }
+}

@@ -97,17 +97,29 @@ public struct DurationReporter {
         var output = ""
         
         reports.forEach { eventName, eventReports in
-            let eventDuration = eventReports.flatMap { $0.duration }.reduce(TimeInterval(0), +)
+            let eventDuration = eventReports.flatMap { $0.duration }
+                .reduce(TimeInterval(0), +)
             let eventDurationToRound = Double(eventDuration * DurationReporter.timeUnit.perSecond)
             let eventDurationRounded = String(format: "%.f", eventDurationToRound)
             output += ("\n🚀 \(eventName) - \(eventDurationRounded)\(DurationReporter.timeUnit.symbol)\n")
             
+            let maxTitleLength = eventReports.max(by: { $1.title.characters.count > $0.title.characters.count })?
+                .title.characters.count ?? 0
+            let maxCounterLength = String(eventReports.count).characters.count
+            let maxDurationLength = String(format: "%.f", ((eventReports.flatMap{ $0.duration }.max(by: { $1 > $0 }) ?? 0) * DurationReporter.timeUnit.perSecond)).characters.count
+
             eventReports.enumerated().forEach { index, report in
                 if let duration = report.duration {
                     let durationToRound = duration * DurationReporter.timeUnit.perSecond
                     let percentageRounded = String(format: "%.f", (duration / eventDuration) * 100.0)
                     let durationRounded = String(format: "%.f", durationToRound)
-                    output += "\(index + 1). \(report.title) \(durationRounded)\(DurationReporter.timeUnit.symbol) \(percentageRounded)%\n"
+                    
+                    let unifiedLengthTitle = report.title + String(repeating: " ", count: maxTitleLength - report.title.characters.count)
+                    var counter = "\(index + 1)"
+                    let unifiedLengthCounter = "\(counter)." + String(repeating: " ", count: maxCounterLength - counter.characters.count)
+                    let unifiedLengthDuration = durationRounded + DurationReporter.timeUnit.symbol + String(repeating: " ", count: maxDurationLength - durationRounded.characters.count)
+                    
+                    output += "\(unifiedLengthCounter) \(unifiedLengthTitle) \(unifiedLengthDuration) \(percentageRounded)%\n"
                 } else {
                     output += "\(index + 1). 🔴 \(report.title) - ?\n"
                 }
