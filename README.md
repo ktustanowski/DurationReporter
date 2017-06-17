@@ -28,7 +28,7 @@ Take a look at this console log. If this looks useful to you keep reading. You w
 
 ## Carthage
 ```
-github "ktustanowski/DurationReporter" "0.1.0"
+github "ktustanowski/DurationReporter" "0.2.0"
 ```
 
 ## How it works
