@@ -46,10 +46,6 @@ public struct DurationReporter {
         let actionReports = eventReports.filter({ $0.title.contains(action) })
         let actionAlreadyTracked = actionReports.filter({ $0.duration == nil }).count > 0
         
-        guard !actionAlreadyTracked else {
-            print("Can't add action - another \(action) is already tracked.")
-            return }
-        
         let actionCount = actionReports.count
         
         var actionUniqueName = action

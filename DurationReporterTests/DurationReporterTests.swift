@@ -88,11 +88,28 @@ class DurationReporterTests: XCTestCase {
         XCTAssertEqual(reportData["EventName"]?.count, 2)
     }
     
-    func testThatCantReportMultipleIdenticalActionsForEventAtTheSameTime() {
+    func testThatWhenReportingIdenticalActionAsTheUnfinishedOneNewActionIsAdded() {
         DurationReporter.begin(event: "EventName", action: "TestAction")
         DurationReporter.begin(event: "EventName", action: "TestAction")
+        DurationReporter.begin(event: "EventName", action: "TestAction")
+        DurationReporter.end(event: "EventName", action: "TestAction")
         
-        XCTAssertEqual(reportData["EventName"]?.count, 1)
+        XCTAssertEqual(reportData["EventName"]?.filter { !$0.isComplete }.count, 2)
+        XCTAssertEqual(reportData["EventName"]?.filter { $0.isComplete }.count, 1)
+    }
+
+    func testThatWhenAddingActionSameAsUnfinishedTheUnfinishedIsLeftUnfinishedAndReportedTimeIsCountedForNewAction() {
+        DurationReporter.begin(event: "EventName", action: "TestAction")
+        sleep(1) //In tests we shouldn't wait, it's bad practice - but without it duration would be 0 and test would test nothing.
+        DurationReporter.begin(event: "EventName", action: "TestAction")
+        DurationReporter.begin(event: "EventName", action: "TestAction")
+        DurationReporter.begin(event: "EventName", action: "TestAction")
+        sleep(1) //Check comment ^
+        DurationReporter.end(event: "EventName", action: "TestAction")
+        
+        let report = (reportData["EventName"]?.filter { $0.isComplete }.first)!
+        XCTAssertGreaterThanOrEqual(report.duration!, 1.0)
+        XCTAssertLessThan(report.duration!, 1.2)
     }
 
     func testThatCanReportMultipleIdenticalActionsForEventOneByOne() {
@@ -129,7 +146,7 @@ class DurationReporterTests: XCTestCase {
     
     func testThatReportsCorrectDuration() {
         DurationReporter.begin(event: "EventName", action: "TestAction")
-        usleep(1000000) //In tests we shouldn't wait, it's bad practice - but without it duration would be 0 and test would test nothing.
+        sleep(1) //In tests we shouldn't wait, it's bad practice - but without it duration would be 0 and test would test nothing.
         
         DurationReporter.end(event: "EventName", action: "TestAction")
         
