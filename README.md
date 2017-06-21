@@ -90,6 +90,7 @@ And the result:
 Starting of another already reported action results in creation of another action for the event with addition of incremental counter. When trying to begin action for which previous one didn't finish yet:
 - previous, unfinished will show as incomplete in the report since it can't be finished with believable duration
 - `fresh` next action will be started with separate counter etc.
+
 Tracking of multiple actions in the same time at this point is not possible.
 ```
 DurationReporter.begin(event: "Video", action: "Play")
