@@ -44,7 +44,6 @@ public struct DurationReporter {
     public static func begin(event: String, action: String, payload: Any? = nil) {
         var eventReports = reports[event] ?? []
         let actionReports = eventReports.filter({ $0.title.contains(action) })
-        let actionAlreadyTracked = actionReports.filter({ $0.duration == nil }).count > 0
         
         let actionCount = actionReports.count
         
