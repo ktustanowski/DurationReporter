@@ -87,10 +87,13 @@ And the result:
 2. Save configuration   1000ms 32.88%
 ```
 ## Grouped reporting with duplications
-Duplication is possible only when previous action of this kind is completed. Starting two identical actions at the same time is impossible. There is no way to determine which one should be completed when `DurationReporter.end` is called.
-When one action ends another identical can be reported:
-
+Starting of another already reported action results in creation of another action for the event with addition of incremental counter. When trying to begin action for which previous one didn't finish yet:
+- previous, unfinished will show as incomplete in the report since it can't be finished with believable duration
+- `fresh` next action will be started with separate counter etc.
+Tracking of multiple actions in the same time at this point is not possible.
 ```
+DurationReporter.begin(event: "Video", action: "Play")
+[...]
 DurationReporter.begin(event: "Video", action: "Play")
 [...]
 DurationReporter.end(event: "Video", action: "Play")
@@ -106,10 +109,11 @@ DurationReporter.end(event: "Video", action: "Play")
 ```
 Duplicated actions have 2, 3, 4... suffix:
 ```
-🚀 Video::SherlockS01E01 - 3008ms
-1. Play  1006ms 33.44%
-2. Play2 1001ms 33.28%
-3. Play3 1001ms 33.28%
+🚀 Video - 3008ms
+1. 🔴 Play - ?
+2. Play2 1006ms 33%
+3. Play3 1001ms 33%
+4. Play4 1001ms 33%
 ```
 ## Reporting with custom payload
 There might be sutuations like:
