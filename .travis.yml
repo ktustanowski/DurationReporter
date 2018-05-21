@@ -1,5 +1,4 @@
 language: objective-c
-osx_image: xcode8.3
+osx_image: xcode9.3
 script:
-- xcodebuild -project DurationReporter.xcodeproj -scheme DurationReporter -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.2' test
-
+- xcodebuild -project DurationReporter.xcodeproj -scheme DurationReporter -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=11.3' test"
